@@ -1,0 +1,26 @@
+{
+  "name": "front-orcamento",
+  "version": "1.0.0",
+  "description": "Site Web para orçamento de serviços",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabianoandrad/Front-orcamento.git"
+  },
+  "author": "Fabiano Andrade",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fabianoandrad/Front-orcamento/issues"
+  },
+  "homepage": "https://github.com/fabianoandrad/Front-orcamento#readme",
+  "dependencies": {
+    "next": "^10.0.7",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}
