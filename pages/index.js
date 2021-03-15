@@ -1,23 +1,27 @@
 import React from "react";
 
-import Head from "next/head"
+import Head from "next/head";
 import { Jumbotron, Container } from "reactstrap";
 import Menu from "../components/Menu";
 import Footer from "../components/Footer";
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-library.add(fas)
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+library.add(fas);
 
-function Home() {
+function Home({ data }) {
   return (
     <div>
       <Head>
         <title>Home</title>
-        <meta name="description" content="Site de orçamento para desenvolvimento web e Apps"/>
+        <meta
+          name="description"
+          content="Site de orçamento para desenvolvimento web e Apps"
+        />
       </Head>
       <Menu />
+
       <Jumbotron fluid className="descr-top">
         <style>
           {`.descr-top{
@@ -28,9 +32,9 @@ function Home() {
         </style>
         <Container className="text-center">
           <h1 className="display-4">
-            Temos a solução que sua empresa precisa!
+            {data.home.topTitle}
           </h1>
-          <p className="lead">This is a simple example a Jumbotron</p>
+          <p className="lead">{data.home.topSubTitle}</p>
           <p className="lead">
             <a
               href="/orcamento"
@@ -71,7 +75,7 @@ function Home() {
           <div className="row">
             <div className="col-md-4">
               <div className="rounded-circle circle centralize">
-              <FontAwesomeIcon icon="laptop-code"/>
+                <FontAwesomeIcon icon="laptop-code" />
               </div>
               <h2 className="mt-4 mb-4">Serviço um</h2>
               <p>
@@ -83,7 +87,7 @@ function Home() {
 
             <div className="col-md-4">
               <div className="rounded-circle circle centralize">
-              <FontAwesomeIcon icon="mobile-alt"/>
+                <FontAwesomeIcon icon="mobile-alt" />
               </div>
               <h2 className="mt-4 mb-4">Serviço dois</h2>
               <p>
@@ -91,10 +95,10 @@ function Home() {
                 taciti quam taciti
               </p>
             </div>
-            
+
             <div className="col-md-4">
               <div className="rounded-circle circle centralize">
-              <FontAwesomeIcon icon="network-wired"/>
+                <FontAwesomeIcon icon="network-wired" />
               </div>
               <h2 className="mt-4 mb-4">Serviço tres</h2>
               <p>
@@ -106,10 +110,16 @@ function Home() {
         </Container>
       </Jumbotron>
 
-      <Footer/>
-      
+      <Footer />
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const response = await fetch("http://localhost:8080/home"); //obtem de get /home da api
+  const data = await response.json();
+
+  return { props: { data } }
 }
 
 export default Home;

@@ -26,7 +26,7 @@ const Menu = (props) => {
                 <NavLink href="/">Home</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/orcamento">Orçamento</NavLink>
+                <NavLink href="/budget">Orçamento</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

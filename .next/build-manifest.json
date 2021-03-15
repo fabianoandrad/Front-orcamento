@@ -29,10 +29,10 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
-    "/orcamento": [
+    "/budget": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/orcamento.js"
+      "static/chunks/pages/budget.js"
     ]
   },
   "ampFirstPages": []
