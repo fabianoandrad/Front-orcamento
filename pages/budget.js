@@ -27,7 +27,7 @@ function Budget() {
   const onChangeInput = (e) => {
     setBudget({ ...budget, [e.target.name]: e.target.value });
   };
-  const sendBudget = async (e) => {
+  const sendBudget = async (e) => { // executa esta function quando botão do formulario for precionado
     e.preventDefault();
     console.log(budget)
 
