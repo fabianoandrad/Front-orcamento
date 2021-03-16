@@ -12,11 +12,12 @@ import {
   FormGroup,
   Label,
   Input,
+  Alert,
 } from "reactstrap";
 
 function Budget() {
+  // function useState começa com os objetos vazio
   const [budget, setBudget] = useState({
-    // function useState começa com os objetos vazio
     name: "",
     email: "",
     phone: "",
@@ -24,32 +25,58 @@ function Budget() {
     project: "",
   });
 
+  // resposta para o alerta
+  const [response, setResponse] = useState({
+    formSave: false, // se form foi enviado e esta sendo salvo, bloqueia o botão
+    type: "", // tipo de error
+    message: "", // e a menssagem de erro
+  });
+
+  // salva na var budget alguma alteração no form
   const onChangeInput = (e) => {
     setBudget({ ...budget, [e.target.name]: e.target.value });
   };
-  const sendBudget = async (e) => { // executa esta function quando botão do formulario for precionado
+
+  // executa esta function quando botão do formulario for precionado
+  const sendBudget = async (e) => {
     e.preventDefault();
-    console.log(budget)
+
+    setResponse({ formSave: true})
+    //console.log(budget);
 
     try {
-      const response = await fetch("http://localhost:8080/budget", { // envia dados a api e o bd
+      const response = await fetch("http://localhost:8080/budget", {
+        // envia dados a api e o bd
         method: "POST", // usa o metodo POST
         body: JSON.stringify(budget), // envia a variavel budget no formato de um objeto
-        headers: {'Content-Type': 'application/json'} // indica que vai enviar um conteudo em formato json
+        headers: { "Content-Type": "application/json" }, // indica que vai enviar um conteudo em formato json
       });
 
-      const responseSend = await response.json()
+      const responseSend = await response.json();
 
-      if(responseSend.error){
-        alert(responseSend.message)
-      }else{
-        alert(responseSend.message)
+      // salva na variavel response se houve error ou success
+      if (responseSend.error) {
+        setResponse({
+          formSave: false,
+          type: "error",
+          message: responseSend.message,
+        });
+      } else {
+        setResponse({
+          formSave: false,
+          type: "success",
+          message: responseSend.message,
+        });
       }
-      
-    } catch (error) {
-      alert("Erro: Orçamento não enviado!")
-    }
 
+      // neste caso não houve uma resposta da api
+    } catch (error) {
+      setResponse({
+        formSave: false,
+        type: "error",
+        message: "Erro: Orçamento não enviado!",
+      });
+    }
 
   };
 
@@ -88,6 +115,11 @@ function Budget() {
         </style>
 
         <Container>
+
+          {response.type === 'error' ?  <Alert color="danger">{response.message}</Alert> : ""}
+          {response.type === 'success' ?  <Alert color="success">{response.message}</Alert> : ""}
+         
+
           <Form onSubmit={sendBudget}>
             <FormGroup>
               <Label for="name">Nome</Label>
@@ -97,6 +129,7 @@ function Budget() {
                 id="name"
                 placeholder="Preencha com o seu nome completo"
                 onChange={onChangeInput}
+                required
               />
             </FormGroup>
 
@@ -108,6 +141,7 @@ function Budget() {
                 id="email"
                 placeholder="Preencha com o seu e-mail"
                 onChange={onChangeInput}
+                required
               />
             </FormGroup>
 
@@ -119,11 +153,12 @@ function Budget() {
                 id="phone"
                 placeholder="(xx) xxxxx-xxxx"
                 onChange={onChangeInput}
+                required
               />
             </FormGroup>
 
             <FormGroup>
-              <Label for="whatsapp">Telefone</Label>
+              <Label for="whatsapp">Whatsapp</Label>
               <Input
                 type="text"
                 name="whatsapp"
@@ -141,12 +176,12 @@ function Budget() {
                 id="project"
                 placeholder="Fale um pouco de seu projeto"
                 onChange={onChangeInput}
+                required
               />
             </FormGroup>
 
-            <Button type="submit" outline color="primary">
-              Solicitar
-            </Button>
+            {response.formSave == true ? <Button type="submit" outline color="warning" disabled >Enviando...</Button> : <Button type="submit" outline color="primary">Solicitar</Button> } 
+
           </Form>
         </Container>
       </Jumbotron>
