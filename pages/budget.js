@@ -32,9 +32,9 @@ function Budget() {
     console.log(budget)
 
     try {
-      const response = await fetch("http://localhost:8080/budget", {
+      const response = await fetch("http://localhost:8080/budget", { // envia dados a api e o bd
         method: "POST", // usa o metodo POST
-        body: JSON.stringify(budget), // envia no formato de um objeto a variavel budget
+        body: JSON.stringify(budget), // envia a variavel budget no formato de um objeto
         headers: {'Content-Type': 'application/json'} // indica que vai enviar um conteudo em formato json
       });
 

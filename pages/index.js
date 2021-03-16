@@ -10,7 +10,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 library.add(fas);
 
-function Home({ data }) {
+
+function Home({ data }) { // em {data} esta o json vindo api
   return (
     <div>
       <Head>
